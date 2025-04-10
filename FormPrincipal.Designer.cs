@@ -38,9 +38,9 @@
             tabControl1 = new TabControl();
             tabMonitoramento = new TabPage();
             tabGrafico = new TabPage();
+            label4 = new Label();
             label3 = new Label();
             listBoxDias = new ListBox();
-            label4 = new Label();
             tabControl1.SuspendLayout();
             tabMonitoramento.SuspendLayout();
             tabGrafico.SuspendLayout();
@@ -153,10 +153,22 @@
             tabGrafico.Text = "Gráfico";
             tabGrafico.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            label4.BackColor = SystemColors.Info;
+            label4.BorderStyle = BorderStyle.FixedSingle;
+            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(6, 2);
+            label4.Name = "label4";
+            label4.Size = new Size(248, 57);
+            label4.TabIndex = 8;
+            label4.Text = "Como Usar:\r\n1- Selecione os dados do dia capturado.\r\n2- Clique em \"Visualizar Gráfico\".";
+            label4.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 99);
+            label3.Location = new Point(6, 68);
             label3.Name = "label3";
             label3.Size = new Size(142, 15);
             label3.TabIndex = 7;
@@ -166,22 +178,10 @@
             // 
             listBoxDias.FormattingEnabled = true;
             listBoxDias.ItemHeight = 15;
-            listBoxDias.Location = new Point(6, 116);
+            listBoxDias.Location = new Point(6, 86);
             listBoxDias.Name = "listBoxDias";
-            listBoxDias.Size = new Size(248, 139);
+            listBoxDias.Size = new Size(248, 169);
             listBoxDias.TabIndex = 6;
-            // 
-            // label4
-            // 
-            label4.BackColor = SystemColors.Info;
-            label4.BorderStyle = BorderStyle.FixedSingle;
-            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(6, 2);
-            label4.Name = "label4";
-            label4.Size = new Size(248, 88);
-            label4.TabIndex = 8;
-            label4.Text = "Como Usar:\r\n1- Selecione os dados do dia capturado.\r\n2- Clique em \"Visualizar Gráfico\".\r\nObs.: Para atualizar os dados do gráfico é necessário fechar e abrir novamente.";
-            label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // FormPrincipal
             // 

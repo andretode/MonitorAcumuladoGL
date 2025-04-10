@@ -85,7 +85,7 @@ namespace GraficoFromCSV
 
         private void buttonVisualizarGrafico_Click(object sender, EventArgs e)
         {
-            if (listBoxDias.SelectedItems.Count > 0)
+            if (listBoxDias.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Selecione um dia para visualizar o gráfico.");
                 return;

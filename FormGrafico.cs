@@ -1,20 +1,24 @@
+using ScottPlot.WinForms;
 using System.Globalization;
 
 namespace GraficoFromCSV
 {
     public partial class FormGrafico : Form
     {
+        private readonly ItemLista _itemLista;
+        private FormsPlot _formsPlot;
+
         public FormGrafico(ItemLista itemLista)
         {
+            _itemLista = itemLista;
             InitializeComponent();
-
             Text = $"Multipla Padrão - {itemLista.Text}";
-            LoadCsvAndPlot(itemLista);
+            LoadCsvAndPlot();
         }
 
-        private void LoadCsvAndPlot(ItemLista itemLista)
+        private void LoadCsvAndPlot()
         {
-            string csvFile = itemLista.Value;
+            string csvFile = _itemLista.Value;
             if (!File.Exists(csvFile))
             {
                 MessageBox.Show("Arquivo CSV não encontrado!");
@@ -44,9 +48,9 @@ namespace GraficoFromCSV
                 string valorStr = parts[1].Trim();
 
                 // Converte a hora para DateTime
-                if (!DateTime.TryParseExact($"{itemLista.Text} {horaStr}", 
-                    "dd/MM/yyyy HH:mm:ss", 
-                    CultureInfo.InvariantCulture, 
+                if (!DateTime.TryParseExact($"{_itemLista.Text} {horaStr}",
+                    "dd/MM/yyyy HH:mm:ss",
+                    CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out DateTime hora))
                 {
                     if (!DateTime.TryParse(horaStr, out hora))
@@ -71,16 +75,38 @@ namespace GraficoFromCSV
             plt.Axes.DateTimeTicksBottom();
 
             // Cria o controle FormsPlot (do ScottPlot) e configura-o para preencher o formulário  
-            var formsPlot = new ScottPlot.WinForms.FormsPlot
+            _formsPlot = new FormsPlot
             {
                 Dock = DockStyle.Fill
             };
 
             // Atribui o plot ao controle FormsPlot usando o método Reset
-            formsPlot.Reset(plt);
+            _formsPlot.Reset(plt);
 
-            // Adiciona o FormsPlot ao formulário  
-            this.Controls.Add(formsPlot);
+            // Add/update o FormsPlot ao formulário
+            if(Controls.Count > 1)
+                Controls.RemoveAt(1);
+            Controls.Add(_formsPlot);
+        }
+
+        private void CopiarGraficoParaAreaDeTransferencia()
+        {
+            var image = _formsPlot?.Plot.GetImage(1200, 800);
+            var bytes = image?.GetImageBytes(ScottPlot.ImageFormat.Png);
+            using var memoryStream = new MemoryStream(bytes);
+            var systemDrawingImage = System.Drawing.Image.FromStream(memoryStream);
+            Clipboard.SetImage(systemDrawingImage);
+            MessageBox.Show("Gráfico PNG copiado para a área de transferência!");
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            CopiarGraficoParaAreaDeTransferencia();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            LoadCsvAndPlot();
         }
     }
 }
