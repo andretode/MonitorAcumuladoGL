@@ -1,0 +1,13 @@
+/.vs
+/packages
+/src/*/App_Data
+\bin
+\obj
+*.pyc
+*.dll
+*.bin
+*.user
+*.bak
+*.log
+*.txt
+*.pubxml
