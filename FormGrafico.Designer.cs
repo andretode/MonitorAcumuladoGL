@@ -32,12 +32,14 @@
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
+            toolStripButton3 = new ToolStripButton();
+            panelGrafico = new Panel();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripButton3 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -63,14 +65,33 @@
             toolStripButton2.Text = "Atualizar gráfico";
             toolStripButton2.Click += toolStripButton2_Click;
             // 
+            // toolStripButton3
+            // 
+            toolStripButton3.Image = (Image)resources.GetObject("toolStripButton3.Image");
+            toolStripButton3.ImageTransparentColor = Color.Magenta;
+            toolStripButton3.Name = "toolStripButton3";
+            toolStripButton3.Size = new Size(133, 22);
+            toolStripButton3.Text = "Limpar zeros iniciais";
+            toolStripButton3.ToolTipText = "Remove os zeros iniciais da captura";
+            toolStripButton3.Click += toolStripButton3_Click;
+            // 
+            // panelGrafico
+            // 
+            panelGrafico.Dock = DockStyle.Fill;
+            panelGrafico.Location = new Point(0, 25);
+            panelGrafico.Name = "panelGrafico";
+            panelGrafico.Size = new Size(800, 425);
+            panelGrafico.TabIndex = 1;
+            // 
             // FormGrafico
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(panelGrafico);
             Controls.Add(toolStrip1);
             Name = "FormGrafico";
-            Text = "Form1";
+            Text = "Gráfico";
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             ResumeLayout(false);
@@ -82,5 +103,7 @@
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton1;
         private ToolStripButton toolStripButton2;
+        private ToolStripButton toolStripButton3;
+        private Panel panelGrafico;
     }
 }

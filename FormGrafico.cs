@@ -12,7 +12,7 @@ namespace GraficoFromCSV
         {
             _itemLista = itemLista;
             InitializeComponent();
-            Text = $"Multipla Padrão - {itemLista.Text}";
+            Text = $"Multipla - {itemLista.Text}";
             LoadCsvAndPlot();
         }
 
@@ -68,11 +68,11 @@ namespace GraficoFromCSV
 
             // Cria a plotagem ScottPlot  
             var plt = new ScottPlot.Plot();
-            var scatter = plt.Add.Scatter(xs.ToArray(), ys.ToArray()); // Corrige o uso do método Add.Scatter  
+            plt.Title($"Multipla - {_itemLista.Text}");
+            plt?.Add.Scatter(xs.ToArray(), ys.ToArray()); // Corrige o uso do método Add.Scatter  
 
             // Substitui o método inexistente DateTimeFormat por configuração manual do formato do eixo X
-            //plt.XAxis.DateTimeFormat(true); // Configura o eixo X para exibir datas/horas  
-            plt.Axes.DateTimeTicksBottom();
+            plt?.Axes.DateTimeTicksBottom();
 
             // Cria o controle FormsPlot (do ScottPlot) e configura-o para preencher o formulário  
             _formsPlot = new FormsPlot
@@ -84,29 +84,27 @@ namespace GraficoFromCSV
             _formsPlot.Reset(plt);
 
             // Add/update o FormsPlot ao formulário
-            if(Controls.Count > 1)
-                Controls.RemoveAt(1);
-            Controls.Add(_formsPlot);
-        }
-
-        private void CopiarGraficoParaAreaDeTransferencia()
-        {
-            var image = _formsPlot?.Plot.GetImage(1200, 800);
-            var bytes = image?.GetImageBytes(ScottPlot.ImageFormat.Png);
-            using var memoryStream = new MemoryStream(bytes);
-            var systemDrawingImage = System.Drawing.Image.FromStream(memoryStream);
-            Clipboard.SetImage(systemDrawingImage);
-            MessageBox.Show("Gráfico PNG copiado para a área de transferência!");
+            //if (Controls.Count > 1)
+            //    Controls.RemoveAt(1);
+            //Controls.Add(_formsPlot);
+            if (panelGrafico.Controls.Count > 0)
+                panelGrafico.Controls.RemoveAt(0);
+            panelGrafico.Controls.Add(_formsPlot);
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            CopiarGraficoParaAreaDeTransferencia();
+            Uteis.CopiarGraficoParaAreaDeTransferencia(_formsPlot);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             LoadCsvAndPlot();
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            Uteis.RemoverZerosIniciais(_itemLista);
         }
     }
 }
