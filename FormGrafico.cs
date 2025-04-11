@@ -1,4 +1,6 @@
+ï»¿using ScottPlot;
 using ScottPlot.WinForms;
+using System.Drawing;
 using System.Globalization;
 
 namespace GraficoFromCSV
@@ -21,7 +23,7 @@ namespace GraficoFromCSV
             string csvFile = _itemLista.Value;
             if (!File.Exists(csvFile))
             {
-                MessageBox.Show("Arquivo CSV não encontrado!");
+                MessageBox.Show("Arquivo CSV nÃ£o encontrado!");
                 return;
             }
 
@@ -29,17 +31,17 @@ namespace GraficoFromCSV
             List<double> xs = new List<double>();
             List<double> ys = new List<double>();
 
-            // Lê todas as linhas do CSV  
+            // LÃª todas as linhas do CSV  
             string[] lines = File.ReadAllLines(csvFile);
 
-            // Percorre as linhas ignorando o cabeçalho  
+            // Percorre as linhas ignorando o cabeÃ§alho  
             for (int i = 1; i < lines.Length; i++)
             {
                 string line = lines[i].Trim();
                 if (string.IsNullOrEmpty(line))
                     continue;
 
-                // Divide a linha pelo ponto e vírgula  
+                // Divide a linha pelo ponto e vÃ­rgula  
                 string[] parts = line.Split(';');
                 if (parts.Length < 2)
                     continue;
@@ -47,7 +49,7 @@ namespace GraficoFromCSV
                 string horaStr = parts[0].Trim();
                 string valorStr = parts[1].Trim();
 
-                // Converte a hora para DateTime
+                // Converte a hora para DateTime  
                 if (!DateTime.TryParseExact($"{_itemLista.Text} {horaStr}",
                     "dd/MM/yyyy HH:mm:ss",
                     CultureInfo.InvariantCulture,
@@ -61,7 +63,7 @@ namespace GraficoFromCSV
                 if (!double.TryParse(valorStr, NumberStyles.Any, new CultureInfo("pt-BR"), out double valor))
                     continue;
 
-                // ScottPlot trabalha com números. Para exibir datas/hora, converta DateTime para OADate.  
+                // ScottPlot trabalha com nÃºmeros. Para exibir datas/hora, converta DateTime para OADate.  
                 xs.Add(hora.ToOADate());
                 ys.Add(valor);
             }
@@ -69,24 +71,38 @@ namespace GraficoFromCSV
             // Cria a plotagem ScottPlot  
             var plt = new ScottPlot.Plot();
             plt.Title($"Multipla - {_itemLista.Text}");
-            plt?.Add.Scatter(xs.ToArray(), ys.ToArray()); // Corrige o uso do método Add.Scatter  
 
-            // Substitui o método inexistente DateTimeFormat por configuração manual do formato do eixo X
-            plt?.Axes.DateTimeTicksBottom();
+            var todos = plt.Add.Scatter(xs.ToArray(), ys.ToArray());
+            todos.LineColor = ScottPlot.Color.FromColor(System.Drawing.Color.Gray);
+            todos.MarkerSize = 0;
 
-            // Cria o controle FormsPlot (do ScottPlot) e configura-o para preencher o formulário  
-            _formsPlot = new FormsPlot
-            {
-                Dock = DockStyle.Fill
-            };
+            //Criar listas para os valores positivos(verde) e negativos(vermelho)  
+            double[] ysVerde = ys.Select(y => y >= 0 ? y : double.NaN).ToArray();
+            double[] ysVermelho = ys.Select(y => y < 0 ? y : double.NaN).ToArray();
+            double[] xsArray = xs.ToArray();
 
-            // Atribui o plot ao controle FormsPlot usando o método Reset
+            var verde = plt.Add.Scatter(xsArray, ysVerde, ScottPlot.Color.FromColor(System.Drawing.Color.Green));
+            verde.MarkerSize = 3;
+            verde.LineWidth = 0;
+
+            var vermelho = plt.Add.Scatter(xsArray, ysVermelho, ScottPlot.Color.FromColor(System.Drawing.Color.Red));
+            vermelho.MarkerSize = 3;
+            vermelho.LineWidth = 0;
+
+            // Substitui o mÃ©todo inexistente DateTimeFormat por configuraÃ§Ã£o manual do formato do eixo X  
+            plt.Axes.DateTimeTicksBottom();
+
+            // Adiciona uma linha horizontal no valor zero  
+            var hLineColocar = ScottPlot.Color.FromColor(System.Drawing.Color.Black);
+            var hLine = plt.Add.HorizontalLine(0.5, 0.5F, hLineColocar, LinePattern.Dashed);
+
+            // Cria o controle FormsPlot (do ScottPlot) e configura-o para preencher o formulÃ¡rio  
+            _formsPlot = new FormsPlot { Dock = DockStyle.Fill };
+
+            // Atribui o plot ao controle FormsPlot usando o mÃ©todo Reset  
             _formsPlot.Reset(plt);
 
-            // Add/update o FormsPlot ao formulário
-            //if (Controls.Count > 1)
-            //    Controls.RemoveAt(1);
-            //Controls.Add(_formsPlot);
+            // Add/update o FormsPlot ao formulÃ¡rio  
             if (panelGrafico.Controls.Count > 0)
                 panelGrafico.Controls.RemoveAt(0);
             panelGrafico.Controls.Add(_formsPlot);
