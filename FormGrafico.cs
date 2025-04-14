@@ -1,6 +1,5 @@
 ﻿using ScottPlot;
 using ScottPlot.WinForms;
-using System.Drawing;
 using System.Globalization;
 
 namespace GraficoFromCSV
@@ -72,22 +71,50 @@ namespace GraficoFromCSV
             var plt = new ScottPlot.Plot();
             plt.Title($"Multipla - {_itemLista.Text}");
 
+            // Adiciona a linha de dados com cor neutra
             var todos = plt.Add.Scatter(xs.ToArray(), ys.ToArray());
             todos.LineColor = ScottPlot.Color.FromColor(System.Drawing.Color.Gray);
             todos.MarkerSize = 0;
 
-            //Criar listas para os valores positivos(verde) e negativos(vermelho)  
-            double[] ysVerde = ys.Select(y => y >= 0 ? y : double.NaN).ToArray();
-            double[] ysVermelho = ys.Select(y => y < 0 ? y : double.NaN).ToArray();
-            double[] xsArray = xs.ToArray();
+            List<(double x, double y)> segmento = new();
+            bool? sinalAtual = null;
 
-            var verde = plt.Add.Scatter(xsArray, ysVerde, ScottPlot.Color.FromColor(System.Drawing.Color.Green));
-            verde.MarkerSize = 3;
-            verde.LineWidth = 0;
+            for (int i = 0; i < xs.Count; i++)
+            {
+                double x = xs[i];
+                double y = ys[i];
+                bool positivo = y >= 0;
 
-            var vermelho = plt.Add.Scatter(xsArray, ysVermelho, ScottPlot.Color.FromColor(System.Drawing.Color.Red));
-            vermelho.MarkerSize = 3;
-            vermelho.LineWidth = 0;
+                // Se mudou de sinal, fecha o segmento anterior
+                if (sinalAtual != null && positivo != sinalAtual)
+                {
+                    AdicionarSegmento(segmento, sinalAtual.Value);
+                    segmento.Clear();
+
+                    // Adiciona ponto anterior novamente para manter continuidade visual
+                    if (i > 0)
+                        segmento.Add((xs[i - 1], ys[i - 1]));
+                }
+
+                segmento.Add((x, y));
+                sinalAtual = positivo;
+            }
+
+            // Adiciona o último segmento
+            if (segmento.Count > 0 && sinalAtual != null)
+                AdicionarSegmento(segmento, sinalAtual.Value);
+
+            // Função auxiliar local
+            void AdicionarSegmento(List<(double x, double y)> seg, bool positivo)
+            {
+                var xsSeg = seg.Select(p => p.x).ToArray();
+                var ysSeg = seg.Select(p => p.y).ToArray();
+                var cor = positivo ? 
+                    ScottPlot.Color.FromColor(System.Drawing.Color.Green) : 
+                    ScottPlot.Color.FromColor(System.Drawing.Color.Red);
+                var linha = plt.Add.Scatter(xsSeg, ysSeg, cor);
+                linha.MarkerSize = 0; // sem marcadores
+            }
 
             // Substitui o método inexistente DateTimeFormat por configuração manual do formato do eixo X  
             plt.Axes.DateTimeTicksBottom();
