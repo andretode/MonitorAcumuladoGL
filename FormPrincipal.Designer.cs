@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
             buttonMonitorar = new Button();
             comboBoxFrequencia = new ComboBox();
@@ -41,14 +42,35 @@
             label4 = new Label();
             label3 = new Label();
             listBoxDias = new ListBox();
+            tabGainLoss = new TabPage();
+            label7 = new Label();
+            labelDiasSemGL = new Label();
+            labelRotuloSemGL = new Label();
+            labelRotuloResultado = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            labelResultado = new Label();
+            labelPrejuizo = new Label();
+            labelLucro = new Label();
+            labelDiasGain = new Label();
+            labelDiasLoss = new Label();
+            label6 = new Label();
+            textBoxLoss = new TextBox();
+            textBoxGain = new TextBox();
+            label5 = new Label();
+            buttonCalcular = new Button();
+            toolTipDiasSemGL = new ToolTip(components);
             tabControl1.SuspendLayout();
             tabMonitoramento.SuspendLayout();
             tabGrafico.SuspendLayout();
+            tabGainLoss.SuspendLayout();
             SuspendLayout();
             // 
             // buttonMonitorar
             // 
-            buttonMonitorar.BackColor = Color.LightGreen;
+            buttonMonitorar.BackColor = SystemColors.Window;
             buttonMonitorar.Location = new Point(6, 249);
             buttonMonitorar.Name = "buttonMonitorar";
             buttonMonitorar.Size = new Size(115, 34);
@@ -89,7 +111,7 @@
             // 
             // buttonPararMonitoramento
             // 
-            buttonPararMonitoramento.BackColor = Color.Salmon;
+            buttonPararMonitoramento.BackColor = SystemColors.Window;
             buttonPararMonitoramento.Enabled = false;
             buttonPararMonitoramento.Location = new Point(139, 249);
             buttonPararMonitoramento.Name = "buttonPararMonitoramento";
@@ -114,6 +136,7 @@
             // 
             tabControl1.Controls.Add(tabMonitoramento);
             tabControl1.Controls.Add(tabGrafico);
+            tabControl1.Controls.Add(tabGainLoss);
             tabControl1.Location = new Point(12, 11);
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
@@ -183,6 +206,214 @@
             listBoxDias.Size = new Size(248, 169);
             listBoxDias.TabIndex = 6;
             // 
+            // tabGainLoss
+            // 
+            tabGainLoss.Controls.Add(label7);
+            tabGainLoss.Controls.Add(labelDiasSemGL);
+            tabGainLoss.Controls.Add(labelRotuloSemGL);
+            tabGainLoss.Controls.Add(labelRotuloResultado);
+            tabGainLoss.Controls.Add(label8);
+            tabGainLoss.Controls.Add(label9);
+            tabGainLoss.Controls.Add(label10);
+            tabGainLoss.Controls.Add(label11);
+            tabGainLoss.Controls.Add(labelResultado);
+            tabGainLoss.Controls.Add(labelPrejuizo);
+            tabGainLoss.Controls.Add(labelLucro);
+            tabGainLoss.Controls.Add(labelDiasGain);
+            tabGainLoss.Controls.Add(labelDiasLoss);
+            tabGainLoss.Controls.Add(label6);
+            tabGainLoss.Controls.Add(textBoxLoss);
+            tabGainLoss.Controls.Add(textBoxGain);
+            tabGainLoss.Controls.Add(label5);
+            tabGainLoss.Controls.Add(buttonCalcular);
+            tabGainLoss.Location = new Point(4, 24);
+            tabGainLoss.Name = "tabGainLoss";
+            tabGainLoss.Size = new Size(260, 292);
+            tabGainLoss.TabIndex = 2;
+            tabGainLoss.Text = "Estudo";
+            tabGainLoss.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            label7.BackColor = SystemColors.Info;
+            label7.BorderStyle = BorderStyle.FixedSingle;
+            label7.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Location = new Point(9, 12);
+            label7.Name = "label7";
+            label7.Size = new Size(248, 57);
+            label7.TabIndex = 17;
+            label7.Text = "Como Usar:\r\n1- Informe o gain/loss do estudo.\r\n2- Clique em \"Fazer Estudo\".";
+            label7.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // labelDiasSemGL
+            // 
+            labelDiasSemGL.AutoSize = true;
+            labelDiasSemGL.Font = new Font("Segoe UI", 9F);
+            labelDiasSemGL.ForeColor = Color.DarkOrange;
+            labelDiasSemGL.Location = new Point(162, 184);
+            labelDiasSemGL.Name = "labelDiasSemGL";
+            labelDiasSemGL.Size = new Size(17, 15);
+            labelDiasSemGL.TabIndex = 16;
+            labelDiasSemGL.Text = "--";
+            labelDiasSemGL.Visible = false;
+            // 
+            // labelRotuloSemGL
+            // 
+            labelRotuloSemGL.AutoSize = true;
+            labelRotuloSemGL.Font = new Font("Segoe UI", 9F);
+            labelRotuloSemGL.ForeColor = Color.DarkOrange;
+            labelRotuloSemGL.Location = new Point(14, 184);
+            labelRotuloSemGL.Name = "labelRotuloSemGL";
+            labelRotuloSemGL.Size = new Size(120, 15);
+            labelRotuloSemGL.TabIndex = 15;
+            labelRotuloSemGL.Text = "Dias não atingidos [?]";
+            toolTipDiasSemGL.SetToolTip(labelRotuloSemGL, "Dias não atingidos pelo gain/loss alvo informado.");
+            labelRotuloSemGL.Visible = false;
+            // 
+            // labelRotuloResultado
+            // 
+            labelRotuloResultado.AutoSize = true;
+            labelRotuloResultado.Location = new Point(14, 261);
+            labelRotuloResultado.Name = "labelRotuloResultado";
+            labelRotuloResultado.Size = new Size(62, 15);
+            labelRotuloResultado.TabIndex = 14;
+            labelRotuloResultado.Text = "Resultado:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = Color.Red;
+            label8.Location = new Point(14, 246);
+            label8.Name = "label8";
+            label8.Size = new Size(84, 15);
+            label8.TabIndex = 13;
+            label8.Text = "Prejuízo bruto:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.ForeColor = Color.LimeGreen;
+            label9.Location = new Point(14, 231);
+            label9.Name = "label9";
+            label9.Size = new Size(72, 15);
+            label9.TabIndex = 12;
+            label9.Text = "Lucro Bruto:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.LimeGreen;
+            label10.Location = new Point(14, 201);
+            label10.Name = "label10";
+            label10.Size = new Size(75, 15);
+            label10.TabIndex = 11;
+            label10.Text = "Dias de Gain:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.ForeColor = Color.Red;
+            label11.Location = new Point(14, 216);
+            label11.Name = "label11";
+            label11.Size = new Size(74, 15);
+            label11.TabIndex = 10;
+            label11.Text = "Dias de Loss:";
+            // 
+            // labelResultado
+            // 
+            labelResultado.AutoSize = true;
+            labelResultado.Location = new Point(162, 261);
+            labelResultado.Name = "labelResultado";
+            labelResultado.Size = new Size(17, 15);
+            labelResultado.TabIndex = 9;
+            labelResultado.Text = "--";
+            // 
+            // labelPrejuizo
+            // 
+            labelPrejuizo.AutoSize = true;
+            labelPrejuizo.ForeColor = Color.Red;
+            labelPrejuizo.Location = new Point(162, 246);
+            labelPrejuizo.Name = "labelPrejuizo";
+            labelPrejuizo.Size = new Size(17, 15);
+            labelPrejuizo.TabIndex = 8;
+            labelPrejuizo.Text = "--";
+            // 
+            // labelLucro
+            // 
+            labelLucro.AutoSize = true;
+            labelLucro.ForeColor = Color.LimeGreen;
+            labelLucro.Location = new Point(162, 231);
+            labelLucro.Name = "labelLucro";
+            labelLucro.Size = new Size(17, 15);
+            labelLucro.TabIndex = 7;
+            labelLucro.Text = "--";
+            // 
+            // labelDiasGain
+            // 
+            labelDiasGain.AutoSize = true;
+            labelDiasGain.ForeColor = Color.LimeGreen;
+            labelDiasGain.Location = new Point(162, 201);
+            labelDiasGain.Name = "labelDiasGain";
+            labelDiasGain.Size = new Size(17, 15);
+            labelDiasGain.TabIndex = 6;
+            labelDiasGain.Text = "--";
+            // 
+            // labelDiasLoss
+            // 
+            labelDiasLoss.AutoSize = true;
+            labelDiasLoss.ForeColor = Color.Red;
+            labelDiasLoss.Location = new Point(162, 216);
+            labelDiasLoss.Name = "labelDiasLoss";
+            labelDiasLoss.Size = new Size(17, 15);
+            labelDiasLoss.TabIndex = 5;
+            labelDiasLoss.Text = "--";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(154, 84);
+            label6.Name = "label6";
+            label6.Size = new Size(55, 15);
+            label6.TabIndex = 4;
+            label6.Text = "Loss alvo";
+            // 
+            // textBoxLoss
+            // 
+            textBoxLoss.Location = new Point(154, 102);
+            textBoxLoss.Name = "textBoxLoss";
+            textBoxLoss.Size = new Size(64, 23);
+            textBoxLoss.TabIndex = 3;
+            textBoxLoss.Text = "2800";
+            textBoxLoss.KeyPress += textBoxLoss_KeyPress;
+            // 
+            // textBoxGain
+            // 
+            textBoxGain.Location = new Point(38, 102);
+            textBoxGain.Name = "textBoxGain";
+            textBoxGain.Size = new Size(64, 23);
+            textBoxGain.TabIndex = 2;
+            textBoxGain.Text = "1500";
+            textBoxGain.KeyPress += textBoxGain_KeyPress;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(38, 84);
+            label5.Name = "label5";
+            label5.Size = new Size(56, 15);
+            label5.TabIndex = 1;
+            label5.Text = "Gain alvo";
+            // 
+            // buttonCalcular
+            // 
+            buttonCalcular.Location = new Point(14, 142);
+            buttonCalcular.Name = "buttonCalcular";
+            buttonCalcular.Size = new Size(231, 29);
+            buttonCalcular.TabIndex = 0;
+            buttonCalcular.Text = "Fazer Estudo";
+            buttonCalcular.UseVisualStyleBackColor = true;
+            buttonCalcular.Click += buttonCalcular_Click;
+            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -197,6 +428,8 @@
             tabMonitoramento.PerformLayout();
             tabGrafico.ResumeLayout(false);
             tabGrafico.PerformLayout();
+            tabGainLoss.ResumeLayout(false);
+            tabGainLoss.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -214,5 +447,25 @@
         private ListBox listBoxDias;
         private Label label3;
         private Label label4;
+        private TabPage tabGainLoss;
+        private TextBox textBoxGain;
+        private Label label5;
+        private Button buttonCalcular;
+        private Label label6;
+        private TextBox textBoxLoss;
+        private Label labelResultado;
+        private Label labelPrejuizo;
+        private Label labelLucro;
+        private Label labelDiasGain;
+        private Label labelDiasLoss;
+        private Label labelRotuloResultado;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label labelRotuloSemGL;
+        private Label labelDiasSemGL;
+        private ToolTip toolTipDiasSemGL;
+        private Label label7;
     }
 }

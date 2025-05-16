@@ -10,8 +10,10 @@ namespace GraficoFromCSV
         {
             InitializeComponent();
 
+            comboBoxFrequencia.SelectedIndex = 0;
             listBoxDias.DisplayMember = "Text";
             listBoxDias.ValueMember = "Value";
+            AjustarAparenciaBotoesMonitoramentoParado();
         }
 
         private async void buttonMonitorar_Click(object sender, EventArgs e)
@@ -27,17 +29,31 @@ namespace GraficoFromCSV
 
             try
             {
-                comboBoxFrequencia.Enabled = false;
-                buttonMonitorar.Enabled = false;
-                buttonPararMonitoramento.Enabled = true;
+                AjustarAparenciaBotoesMonitoramentoExecutando();
                 await taskMonitoramento;
             }
             finally
             {
-                comboBoxFrequencia.Enabled = true;
-                buttonMonitorar.Enabled = true;
-                buttonPararMonitoramento.Enabled = false;
+                AjustarAparenciaBotoesMonitoramentoParado();
             }
+        }
+
+        private void AjustarAparenciaBotoesMonitoramentoExecutando()
+        {
+            comboBoxFrequencia.Enabled = false;
+            buttonMonitorar.Enabled = false;
+            buttonPararMonitoramento.Enabled = true;
+            buttonMonitorar.BackColor = Color.LightGray;
+            buttonPararMonitoramento.BackColor = Color.Red;
+        }
+
+        private void AjustarAparenciaBotoesMonitoramentoParado()
+        {
+            comboBoxFrequencia.Enabled = true;
+            buttonMonitorar.Enabled = true;
+            buttonPararMonitoramento.Enabled = false;
+            buttonMonitorar.BackColor = Color.LightGreen;
+            buttonPararMonitoramento.BackColor = Color.LightGray;
         }
 
         private void buttonPararMonitoramento_Click(object sender, EventArgs e)
@@ -61,26 +77,12 @@ namespace GraficoFromCSV
                 }
             }
         }
-
         private void AtualizarDiasDisponiveis()
         {
             listBoxDias.Items.Clear();
-            var arquivos = Directory.GetFiles(Directory.GetCurrentDirectory(), "valores_*.csv");
-            var itens = new List<ItemLista>();
-
-            foreach (var arquivo in arquivos)
-            {
-                var nomeArquivo = Path.GetFileName(arquivo);
-                var dataStr = nomeArquivo.Split('_')[1].Split('.')[0];
-                var data = DateTime.ParseExact(dataStr, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
-                itens.Add(new ItemLista(nomeArquivo, data));
-            }
-
-            var itensOrdenados = itens.OrderByDescending(x => x.Data).ToList();
+            var itensOrdenados = Uteis.GetDiasDisponiveis();
             foreach (var item in itensOrdenados)
-            {
                 listBoxDias.Items.Add(item);
-            }
         }
 
         private void buttonVisualizarGrafico_Click(object sender, EventArgs e)
@@ -96,7 +98,57 @@ namespace GraficoFromCSV
                 formGrafico.Dispose();
             formGrafico = new FormGrafico(selecionado);
             formGrafico.Show();
+        }
 
+        private void buttonCalcular_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxGain.Text) || string.IsNullOrEmpty(textBoxLoss.Text))
+            {
+                MessageBox.Show("Preencha os campos de ganho e perda.");
+                return;
+            }
+            var gain = Math.Abs(int.Parse(textBoxGain.Text));
+            var loss = Math.Abs(int.Parse(textBoxLoss.Text)) * -1;
+            var resultado = Uteis.CalcularGainsLosses(gain, loss);
+
+            labelDiasGain.Text = $"{resultado.DiasGain} de {resultado.DiasTotais}";
+            labelDiasLoss.Text = $"{resultado.DiasLoss} de {resultado.DiasTotais}";
+            if (resultado.DiaSemGL == 0)
+            {
+                labelDiasSemGL.Visible = false;
+                labelRotuloSemGL.Visible = false;
+            }
+            else
+            {
+                labelDiasSemGL.Visible = true;
+                labelRotuloSemGL.Visible = true;
+                labelDiasSemGL.Text = $"{resultado.DiaSemGL} de {resultado.DiasTotais}";
+            }
+            labelLucro.Text = resultado.LucroBruto.ToString("C");
+            labelPrejuizo.Text = resultado.PrejuizoBruto.ToString("C");
+            labelResultado.Text = resultado.ResultadoFinal.ToString("C");
+            var corResultado = resultado.ResultadoFinal >= 0 ? Color.LimeGreen : Color.Red;
+            labelRotuloResultado.ForeColor = corResultado;
+            labelResultado.ForeColor = corResultado;
+        }
+
+        private void textBoxLoss_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            SomenteNumeros(e);
+        }
+
+        private void textBoxGain_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            SomenteNumeros(e);
+        }
+
+        private void SomenteNumeros(KeyPressEventArgs e)
+        {
+            // Permite controle (backspace, delete, etc.)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // bloqueia a tecla
+            }
         }
     }
 

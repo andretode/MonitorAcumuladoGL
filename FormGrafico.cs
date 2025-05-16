@@ -13,13 +13,13 @@ namespace GraficoFromCSV
         {
             _itemLista = itemLista;
             InitializeComponent();
-            Text = $"Multipla - {itemLista.Text}";
+            Text = $"Resultado Financeiro - {itemLista.Text}";
             LoadCsvAndPlot();
         }
 
         private void LoadCsvAndPlot()
         {
-            string csvFile = _itemLista.Value;
+            string csvFile = Path.Combine(Uteis.GetCaminhoBaseArquivos(), _itemLista.Value);
             if (!File.Exists(csvFile))
             {
                 MessageBox.Show("Arquivo CSV não encontrado!");
@@ -69,7 +69,7 @@ namespace GraficoFromCSV
 
             // Cria a plotagem ScottPlot  
             var plt = new ScottPlot.Plot();
-            plt.Title($"Multipla - {_itemLista.Text}");
+            plt.Title($"Resultado Financeiro - {_itemLista.Text}");
 
             // Adiciona a linha de dados com cor neutra
             var todos = plt.Add.Scatter(xs.ToArray(), ys.ToArray());
@@ -109,8 +109,8 @@ namespace GraficoFromCSV
             {
                 var xsSeg = seg.Select(p => p.x).ToArray();
                 var ysSeg = seg.Select(p => p.y).ToArray();
-                var cor = positivo ? 
-                    ScottPlot.Color.FromColor(System.Drawing.Color.Green) : 
+                var cor = positivo ?
+                    ScottPlot.Color.FromColor(System.Drawing.Color.Green) :
                     ScottPlot.Color.FromColor(System.Drawing.Color.Red);
                 var linha = plt.Add.Scatter(xsSeg, ysSeg, cor);
                 linha.MarkerSize = 0; // sem marcadores
@@ -148,6 +148,13 @@ namespace GraficoFromCSV
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             Uteis.RemoverZerosIniciais(_itemLista);
+            LoadCsvAndPlot();
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            Uteis.RemoverValoresIguaisNoFinal(_itemLista);
+            LoadCsvAndPlot();
         }
     }
 }

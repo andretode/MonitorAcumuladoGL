@@ -33,13 +33,15 @@
             toolStripButton1 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
             toolStripButton3 = new ToolStripButton();
+            toolStripButton4 = new ToolStripButton();
             panelGrafico = new Panel();
+            toolStripSeparator1 = new ToolStripSeparator();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripButton3 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripSeparator1, toolStripButton3, toolStripButton4 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -75,6 +77,15 @@
             toolStripButton3.ToolTipText = "Remove os zeros iniciais da captura";
             toolStripButton3.Click += toolStripButton3_Click;
             // 
+            // toolStripButton4
+            // 
+            toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
+            toolStripButton4.ImageTransparentColor = Color.Magenta;
+            toolStripButton4.Name = "toolStripButton4";
+            toolStripButton4.Size = new Size(159, 22);
+            toolStripButton4.Text = "Limpar repetidos no final";
+            toolStripButton4.Click += toolStripButton4_Click;
+            // 
             // panelGrafico
             // 
             panelGrafico.Dock = DockStyle.Fill;
@@ -82,6 +93,11 @@
             panelGrafico.Name = "panelGrafico";
             panelGrafico.Size = new Size(800, 425);
             panelGrafico.TabIndex = 1;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 25);
             // 
             // FormGrafico
             // 
@@ -105,5 +121,7 @@
         private ToolStripButton toolStripButton2;
         private ToolStripButton toolStripButton3;
         private Panel panelGrafico;
+        private ToolStripButton toolStripButton4;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }

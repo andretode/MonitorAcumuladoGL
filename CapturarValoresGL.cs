@@ -21,7 +21,7 @@ namespace GraficoFromCSV
             Console.WriteLine("Faça o login manualmente na Flexscan e pressione ENTER para continuar.");
             Console.ReadLine();
 
-            string csvFile = $"valores_{DateTime.Now:yyyy-MM-dd}.csv";
+            string csvFile = Path.Combine(Uteis.GetCaminhoBaseArquivos(), $"valores_{DateTime.Now:yyyy-MM-dd}.csv");
             if (!File.Exists(csvFile))
                 File.WriteAllText(csvFile, "Hora;Valor\n");
 

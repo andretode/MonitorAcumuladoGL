@@ -125,4 +125,7 @@
 4- Acesse a tela de Financeiro Acumulado.
 A partir daí, o sistema começará a coletar os valores automaticamente, sem necessidade de intervenções manuais.</value>
   </data>
+  <metadata name="toolTipDiasSemGL.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
