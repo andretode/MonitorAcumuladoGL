@@ -7,7 +7,7 @@ namespace GraficoFromCSV
     {
         public static string GetCaminhoBaseArquivos()
         {
-            string caminhoBase = Path.Combine(Directory.GetCurrentDirectory(), "Dados2");
+            string caminhoBase = Path.Combine(Directory.GetCurrentDirectory(), FormPrincipal.nomePastaDados);
             if (!Directory.Exists(caminhoBase))
                 Directory.CreateDirectory(caminhoBase);
             return caminhoBase;

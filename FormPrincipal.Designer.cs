@@ -61,11 +61,17 @@
             textBoxGain = new TextBox();
             label5 = new Label();
             buttonCalcular = new Button();
+            tabConfig = new TabPage();
+            label13 = new Label();
+            buttonSalvarNomePastaDados = new Button();
+            label12 = new Label();
+            textBoxPastaDados = new TextBox();
             toolTipDiasSemGL = new ToolTip(components);
             tabControl1.SuspendLayout();
             tabMonitoramento.SuspendLayout();
             tabGrafico.SuspendLayout();
             tabGainLoss.SuspendLayout();
+            tabConfig.SuspendLayout();
             SuspendLayout();
             // 
             // buttonMonitorar
@@ -137,6 +143,7 @@
             tabControl1.Controls.Add(tabMonitoramento);
             tabControl1.Controls.Add(tabGrafico);
             tabControl1.Controls.Add(tabGainLoss);
+            tabControl1.Controls.Add(tabConfig);
             tabControl1.Location = new Point(12, 11);
             tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
@@ -414,11 +421,64 @@
             buttonCalcular.UseVisualStyleBackColor = true;
             buttonCalcular.Click += buttonCalcular_Click;
             // 
+            // tabConfig
+            // 
+            tabConfig.Controls.Add(label13);
+            tabConfig.Controls.Add(buttonSalvarNomePastaDados);
+            tabConfig.Controls.Add(label12);
+            tabConfig.Controls.Add(textBoxPastaDados);
+            tabConfig.Location = new Point(4, 24);
+            tabConfig.Name = "tabConfig";
+            tabConfig.Padding = new Padding(3);
+            tabConfig.Size = new Size(260, 292);
+            tabConfig.TabIndex = 3;
+            tabConfig.Text = "Config";
+            tabConfig.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            label13.BackColor = SystemColors.Info;
+            label13.BorderStyle = BorderStyle.FixedSingle;
+            label13.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.Location = new Point(6, 3);
+            label13.Name = "label13";
+            label13.Size = new Size(248, 183);
+            label13.TabIndex = 18;
+            label13.Text = resources.GetString("label13.Text");
+            label13.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // buttonSalvarNomePastaDados
+            // 
+            buttonSalvarNomePastaDados.Location = new Point(6, 257);
+            buttonSalvarNomePastaDados.Name = "buttonSalvarNomePastaDados";
+            buttonSalvarNomePastaDados.Size = new Size(248, 28);
+            buttonSalvarNomePastaDados.TabIndex = 9;
+            buttonSalvarNomePastaDados.Text = "Salvar";
+            buttonSalvarNomePastaDados.UseVisualStyleBackColor = true;
+            buttonSalvarNomePastaDados.Click += buttonSalvarNomePastaDados_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 210);
+            label12.Name = "label12";
+            label12.Size = new Size(141, 15);
+            label12.TabIndex = 7;
+            label12.Text = "Nome da pasta de dados:";
+            // 
+            // textBoxPastaDados
+            // 
+            textBoxPastaDados.Location = new Point(6, 228);
+            textBoxPastaDados.Name = "textBoxPastaDados";
+            textBoxPastaDados.Size = new Size(248, 23);
+            textBoxPastaDados.TabIndex = 8;
+            textBoxPastaDados.Text = "Dados";
+            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(288, 334);
+            ClientSize = new Size(288, 338);
             Controls.Add(tabControl1);
             MaximizeBox = false;
             Name = "FormPrincipal";
@@ -430,6 +490,8 @@
             tabGrafico.PerformLayout();
             tabGainLoss.ResumeLayout(false);
             tabGainLoss.PerformLayout();
+            tabConfig.ResumeLayout(false);
+            tabConfig.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -467,5 +529,10 @@
         private Label labelDiasSemGL;
         private ToolTip toolTipDiasSemGL;
         private Label label7;
+        private Label label12;
+        private TextBox textBoxPastaDados;
+        private Button buttonSalvarNomePastaDados;
+        private TabPage tabConfig;
+        private Label label13;
     }
 }

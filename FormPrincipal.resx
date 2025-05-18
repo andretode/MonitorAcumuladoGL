@@ -128,4 +128,13 @@ A partir daí, o sistema começará a coletar os valores automaticamente, sem ne
   <metadata name="toolTipDiasSemGL.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Use o campo abaixo para personalizar a pasta onde os dados serão salvos e trabalhados.
+Imagine que você esta testando uma multipla e depois quer testar uma binária. 
+Use a pasta "Binaria" para salvar os dados da binária e a pasta "Multipla" para a outra.
+Ou colocar qualquer nome: "Binaria Abertura", "Integrada 2", etc.
+Se você trocou o nome da pasta e quer volta a trabalhar com os dados de outra pasta 
+existente, basta mudar o nome para a tal pasta.
+</value>
+  </data>
 </root>

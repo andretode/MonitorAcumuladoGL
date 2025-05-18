@@ -5,6 +5,8 @@ namespace GraficoFromCSV
     public partial class FormPrincipal : Form
     {
         FormGrafico? formGrafico;
+        public static string nomePastaDados = "Dados";
+        const string NOME_ARQUIVO_CONFIG = "app.config";
 
         public FormPrincipal()
         {
@@ -14,6 +16,33 @@ namespace GraficoFromCSV
             listBoxDias.DisplayMember = "Text";
             listBoxDias.ValueMember = "Value";
             AjustarAparenciaBotoesMonitoramentoParado();
+            CarregarNomePastaDados();
+        }
+
+        /// <summary>
+        /// Carregar o nome da pasta de dados do arquivo de configuração
+        /// </summary>
+        private void CarregarNomePastaDados()
+        {
+            //string caminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), NOME_ARQUIVO_CONFIG);
+            if (File.Exists(NOME_ARQUIVO_CONFIG))
+            {
+                nomePastaDados = File.ReadAllText(NOME_ARQUIVO_CONFIG);
+                textBoxPastaDados.Text = nomePastaDados;
+            }
+            else
+            {
+                SalvarNomePastaDados();
+            }
+        }
+
+        /// <summary>
+        /// Salvar o nome da pasta de dados no arquivo de configuração para ser recuperado
+        /// na inicialização do programa.
+        /// </summary>
+        private void SalvarNomePastaDados()
+        {
+            File.WriteAllText(NOME_ARQUIVO_CONFIG, nomePastaDados);
         }
 
         private async void buttonMonitorar_Click(object sender, EventArgs e)
@@ -149,6 +178,13 @@ namespace GraficoFromCSV
             {
                 e.Handled = true; // bloqueia a tecla
             }
+        }
+
+        private void buttonSalvarNomePastaDados_Click(object sender, EventArgs e)
+        {
+            nomePastaDados = textBoxPastaDados.Text.Trim();
+            SalvarNomePastaDados();
+            MessageBox.Show($"Nome salvo com sucesso!");
         }
     }
 
