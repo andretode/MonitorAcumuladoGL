@@ -62,16 +62,20 @@
             label5 = new Label();
             buttonCalcular = new Button();
             tabConfig = new TabPage();
+            groupBox2 = new GroupBox();
+            comboBoxPastaTrabalho = new ComboBox();
+            groupBox1 = new GroupBox();
+            textBoxNovaPasta = new TextBox();
+            buttonCriarNovaPasta = new Button();
             label13 = new Label();
-            buttonSalvarNomePastaDados = new Button();
-            label12 = new Label();
-            textBoxPastaDados = new TextBox();
             toolTipDiasSemGL = new ToolTip(components);
             tabControl1.SuspendLayout();
             tabMonitoramento.SuspendLayout();
             tabGrafico.SuspendLayout();
             tabGainLoss.SuspendLayout();
             tabConfig.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // buttonMonitorar
@@ -423,10 +427,9 @@
             // 
             // tabConfig
             // 
+            tabConfig.Controls.Add(groupBox2);
+            tabConfig.Controls.Add(groupBox1);
             tabConfig.Controls.Add(label13);
-            tabConfig.Controls.Add(buttonSalvarNomePastaDados);
-            tabConfig.Controls.Add(label12);
-            tabConfig.Controls.Add(textBoxPastaDados);
             tabConfig.Location = new Point(4, 24);
             tabConfig.Name = "tabConfig";
             tabConfig.Padding = new Padding(3);
@@ -435,6 +438,55 @@
             tabConfig.Text = "Config";
             tabConfig.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(comboBoxPastaTrabalho);
+            groupBox2.Location = new Point(6, 110);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(248, 55);
+            groupBox2.TabIndex = 21;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Trocar pasta de trabalho";
+            // 
+            // comboBoxPastaTrabalho
+            // 
+            comboBoxPastaTrabalho.FormattingEnabled = true;
+            comboBoxPastaTrabalho.Location = new Point(6, 22);
+            comboBoxPastaTrabalho.Name = "comboBoxPastaTrabalho";
+            comboBoxPastaTrabalho.Size = new Size(236, 23);
+            comboBoxPastaTrabalho.TabIndex = 19;
+            comboBoxPastaTrabalho.SelectedValueChanged += trocarPastaDeTrabalho;
+            comboBoxPastaTrabalho.Enter += pegarPastasDeTrabalho;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(textBoxNovaPasta);
+            groupBox1.Controls.Add(buttonCriarNovaPasta);
+            groupBox1.Location = new Point(6, 201);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(248, 85);
+            groupBox1.TabIndex = 20;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Criar nova pasta de trabalho";
+            // 
+            // textBoxNovaPasta
+            // 
+            textBoxNovaPasta.Location = new Point(6, 22);
+            textBoxNovaPasta.Name = "textBoxNovaPasta";
+            textBoxNovaPasta.PlaceholderText = "Nome da nova pasta";
+            textBoxNovaPasta.Size = new Size(236, 23);
+            textBoxNovaPasta.TabIndex = 8;
+            // 
+            // buttonCriarNovaPasta
+            // 
+            buttonCriarNovaPasta.Location = new Point(6, 51);
+            buttonCriarNovaPasta.Name = "buttonCriarNovaPasta";
+            buttonCriarNovaPasta.Size = new Size(236, 25);
+            buttonCriarNovaPasta.TabIndex = 9;
+            buttonCriarNovaPasta.Text = "Criar nova pasta";
+            buttonCriarNovaPasta.UseVisualStyleBackColor = true;
+            buttonCriarNovaPasta.Click += criarNovaPasta;
+            // 
             // label13
             // 
             label13.BackColor = SystemColors.Info;
@@ -442,37 +494,10 @@
             label13.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label13.Location = new Point(6, 3);
             label13.Name = "label13";
-            label13.Size = new Size(248, 183);
+            label13.Size = new Size(248, 89);
             label13.TabIndex = 18;
             label13.Text = resources.GetString("label13.Text");
             label13.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // buttonSalvarNomePastaDados
-            // 
-            buttonSalvarNomePastaDados.Location = new Point(6, 257);
-            buttonSalvarNomePastaDados.Name = "buttonSalvarNomePastaDados";
-            buttonSalvarNomePastaDados.Size = new Size(248, 28);
-            buttonSalvarNomePastaDados.TabIndex = 9;
-            buttonSalvarNomePastaDados.Text = "Salvar";
-            buttonSalvarNomePastaDados.UseVisualStyleBackColor = true;
-            buttonSalvarNomePastaDados.Click += buttonSalvarNomePastaDados_Click;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(6, 210);
-            label12.Name = "label12";
-            label12.Size = new Size(141, 15);
-            label12.TabIndex = 7;
-            label12.Text = "Nome da pasta de dados:";
-            // 
-            // textBoxPastaDados
-            // 
-            textBoxPastaDados.Location = new Point(6, 228);
-            textBoxPastaDados.Name = "textBoxPastaDados";
-            textBoxPastaDados.Size = new Size(248, 23);
-            textBoxPastaDados.TabIndex = 8;
-            textBoxPastaDados.Text = "Dados";
             // 
             // FormPrincipal
             // 
@@ -491,7 +516,9 @@
             tabGainLoss.ResumeLayout(false);
             tabGainLoss.PerformLayout();
             tabConfig.ResumeLayout(false);
-            tabConfig.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -529,10 +556,12 @@
         private Label labelDiasSemGL;
         private ToolTip toolTipDiasSemGL;
         private Label label7;
-        private Label label12;
-        private TextBox textBoxPastaDados;
-        private Button buttonSalvarNomePastaDados;
+        private TextBox textBoxNovaPasta;
+        private Button buttonCriarNovaPasta;
         private TabPage tabConfig;
         private Label label13;
+        private ComboBox comboBoxPastaTrabalho;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
     }
 }

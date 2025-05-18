@@ -129,12 +129,6 @@ A partir daí, o sistema começará a coletar os valores automaticamente, sem ne
     <value>17, 17</value>
   </metadata>
   <data name="label13.Text" xml:space="preserve">
-    <value>Use o campo abaixo para personalizar a pasta onde os dados serão salvos e trabalhados.
-Imagine que você esta testando uma multipla e depois quer testar uma binária. 
-Use a pasta "Binaria" para salvar os dados da binária e a pasta "Multipla" para a outra.
-Ou colocar qualquer nome: "Binaria Abertura", "Integrada 2", etc.
-Se você trocou o nome da pasta e quer volta a trabalhar com os dados de outra pasta 
-existente, basta mudar o nome para a tal pasta.
-</value>
+    <value>Use várias pasta de trabalho. Se estiver testando uma multipla e depois uma binária, use a pasta "Binaria" para salvar os dados da binária e a pasta "Multipla" para a outra. Defina qualquer nome que queira: "Multipla Abertura", "Binárias 2x4", etc.</value>
   </data>
 </root>

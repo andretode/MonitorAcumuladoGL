@@ -28,7 +28,7 @@ namespace GraficoFromCSV
             if (File.Exists(NOME_ARQUIVO_CONFIG))
             {
                 nomePastaDados = File.ReadAllText(NOME_ARQUIVO_CONFIG);
-                textBoxPastaDados.Text = nomePastaDados;
+                comboBoxPastaTrabalho.Text = nomePastaDados;
             }
             else
             {
@@ -180,11 +180,41 @@ namespace GraficoFromCSV
             }
         }
 
-        private void buttonSalvarNomePastaDados_Click(object sender, EventArgs e)
+        private void criarNovaPasta(object sender, EventArgs e)
         {
-            nomePastaDados = textBoxPastaDados.Text.Trim();
+            string nomeNovaPasta = textBoxNovaPasta.Text.Trim();
+            Directory.CreateDirectory(nomeNovaPasta);
+            MessageBox.Show($"Nova pasta criada com sucesso!");
+
+            DialogResult result = MessageBox.Show("Deseja trocar para a nova pasta?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                nomePastaDados = nomeNovaPasta;
+                SalvarNomePastaDados();
+                comboBoxPastaTrabalho.Text = nomeNovaPasta;
+            }
+        }
+
+        private void pegarPastasDeTrabalho(object sender, EventArgs e)
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string[] folders = Directory.GetDirectories(currentDirectory);
+            comboBoxPastaTrabalho.Items.Clear();
+            foreach (var folder in folders)
+            {
+                string folderName = Path.GetFileName(folder);
+                if (folderName == "runtimes" || folderName == "selenium-manager")
+                    continue;
+
+                comboBoxPastaTrabalho.Items.Add(folderName);
+            }
+
+        }
+
+        private void trocarPastaDeTrabalho(object sender, EventArgs e)
+        {
+            nomePastaDados = comboBoxPastaTrabalho.SelectedItem?.ToString();
             SalvarNomePastaDados();
-            MessageBox.Show($"Nome salvo com sucesso!");
         }
     }
 
